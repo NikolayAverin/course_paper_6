@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'mailing',
+    'recipients',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mailing_list_service',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '111111',
         'HOST': 'localhost',
         'PORT': '5432',
     }
