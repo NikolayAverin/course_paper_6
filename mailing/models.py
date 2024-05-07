@@ -4,6 +4,7 @@ from django.db import models
 class MailingMessage(models.Model):
     title = models.CharField(max_length=150, verbose_name='title')
     content = models.TextField(verbose_name='content')
+    recipients = models.ManyToManyField('recipients.Recipients', verbose_name='recipients')
 
     def __str__(self):
         return self.title
@@ -18,7 +19,7 @@ class MailingSettings(models.Model):
     sending_period = models.DateTimeField(verbose_name='sending_period')
     status = models.CharField(max_length=50, verbose_name='status')
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message')
-    recipients = models.ManyToManyField('recipients.Recipients', verbose_name='recipients')
+
 
     def __str__(self):
         return f'{self.message} отправляется каждый {self.sending_period} с {self.first_datetime}'
