@@ -21,11 +21,14 @@ class MailingMessage(models.Model):
 
 class MailingSettings(models.Model):
     first_datetime = models.DateTimeField(verbose_name='first_datetime', auto_now_add=True)
-    end_time = models.DateTimeField(verbose_name='end_time')
-    sending_period = models.CharField(max_length=50, verbose_name='sending_period', choices=FREQUENCY_CHOICES)
-    message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message')
-    recipients = models.ManyToManyField(Recipients, verbose_name='recipients')
-    settings_status = models.CharField(max_length=50, verbose_name='settings_status', choices=STATUS_OF_NEWSLETTER, default='Create')
+    # first_datetime = models.DateTimeField(verbose_name='first_datetime', auto_now_add=True)
+    # end_time = models.DateTimeField(verbose_name='end_time')
+    # sending_period = models.CharField(max_length=50, verbose_name='sending_period', choices=FREQUENCY_CHOICES)
+    # message = models.CharField(max_length=100, verbose_name='message', null=True, blank=True)
+    # message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message')
+    # recipients = models.ManyToManyField(Recipients, verbose_name='recipients')
+    # recipients = models.CharField(max_length=100, verbose_name='recipients', null=True, blank=True)
+    # settings_status = models.CharField(max_length=50, verbose_name='settings_status', choices=STATUS_OF_NEWSLETTER, default='Create')
 
 
     def __str__(self):

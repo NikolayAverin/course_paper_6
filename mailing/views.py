@@ -31,13 +31,13 @@ class MailingMessageDetailView(DetailView):
 
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
-    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    fields = []
     success_url = reverse_lazy('mailing:settings_list')
 
 
 class MailingSettingsUpdateView(UpdateView):
     model = MailingSettings
-    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    fields = []
     success_url = reverse_lazy('mailing:settings_list')
 
 

@@ -10,7 +10,7 @@
   </header>
 
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-  {% for object in object_list %}
+  {% for setting in object_list %}
             <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
@@ -20,7 +20,7 @@
               <p class="card-title pricing-card-title">Для: {{ settings.recipients }}</p>
               <p class="card-title pricing-card-title">Периодичность: {{ settings.sending_period }}</p>
               <p class="card-title pricing-card-title">Завершится: {{ settings.end_time }}</p>
-              <a class="btn btn-primary" href="{% url 'mailing:settings_view' settings.pk %}" role="button">Просмотреть</a>
+              <a class="btn btn-primary" href="{% url 'mailing:settings_view' setting.pk %}" role="button">Просмотреть</a>
             </div>
           </div>
         </div>
