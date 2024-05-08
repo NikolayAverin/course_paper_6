@@ -2,6 +2,9 @@ from django.db import models
 
 from recipients.models import Recipients
 
+FREQUENCY_CHOICES = [('daily', 'раз в день'), ('weekly', 'раз в неделю'), ('monthly', 'раз в месяц'), ]
+STATUS_OF_NEWSLETTER = [("Create", 'Создана'), ("Started", 'Отправлено'), ("Done", 'Завершена'), ]
+
 
 class MailingMessage(models.Model):
     title = models.CharField(max_length=150, verbose_name='title')
@@ -17,11 +20,12 @@ class MailingMessage(models.Model):
 
 
 class MailingSettings(models.Model):
-    first_datetime = models.DateTimeField(verbose_name='first_datetime')
-    sending_period = models.DateTimeField(verbose_name='sending_period')
-    status = models.CharField(max_length=50, verbose_name='status')
+    first_datetime = models.DateTimeField(verbose_name='first_datetime', auto_now_add=True)
+    end_time = models.DateTimeField(verbose_name='end_time')
+    sending_period = models.CharField(max_length=50, verbose_name='sending_period', choices=FREQUENCY_CHOICES)
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message')
     recipients = models.ManyToManyField(Recipients, verbose_name='recipients')
+    settings_status = models.CharField(max_length=50, verbose_name='settings_status', choices=STATUS_OF_NEWSLETTER, default='Create')
 
 
     def __str__(self):

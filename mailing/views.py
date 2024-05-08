@@ -1,29 +1,54 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
-from mailing.models import MailingMessage
+from mailing.models import MailingMessage, MailingSettings
 
 
-class MailingCreateView(CreateView):
+class MailingMessageCreateView(CreateView):
     model = MailingMessage
     fields = ['title', 'content']
     success_url = reverse_lazy('mailing:list')
 
 
-class MailingUpdateView(UpdateView):
+class MailingMessageUpdateView(UpdateView):
     model = MailingMessage
     fields = ['title', 'content']
     success_url = reverse_lazy('mailing:list')
 
 
-class MailingDeleteView(DeleteView):
+class MailingMessageDeleteView(DeleteView):
     model = MailingMessage
     success_url = reverse_lazy('mailing:list')
 
 
-class MailingListView(ListView):
+class MailingMessageListView(ListView):
     model = MailingMessage
 
 
-class MailingDetailView(DetailView):
+class MailingMessageDetailView(DetailView):
     model = MailingMessage
+
+
+class MailingSettingsCreateView(CreateView):
+    model = MailingSettings
+    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    success_url = reverse_lazy('mailing:settings_list')
+
+
+class MailingSettingsUpdateView(UpdateView):
+    model = MailingSettings
+    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    success_url = reverse_lazy('mailing:settings_list')
+
+
+class MailingSettingsListView(ListView):
+    model = MailingSettings
+
+
+class MailingSettingsDetailView(DetailView):
+    model = MailingSettings
+
+
+class MailingSettingsDeleteView(DeleteView):
+    model = MailingSettings
+    success_url = reverse_lazy('mailing:settings_list')
