@@ -6,13 +6,13 @@ from mailing.models import MailingMessage
 
 class MailingCreateView(CreateView):
     model = MailingMessage
-    fields = ['title', 'content', 'recipients']
+    fields = ['title', 'content']
     success_url = reverse_lazy('mailing:list')
 
 
 class MailingUpdateView(UpdateView):
     model = MailingMessage
-    fields = ['title', 'content','recipients']
+    fields = ['title', 'content']
     success_url = reverse_lazy('mailing:list')
 
 

@@ -9,7 +9,13 @@
                     <div class="card-body">
                         {{ form.as_p }}
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Добавить получателя</button>
+                    <button type="submit" class="btn btn-primary mt-3">
+                        {% if object %}
+                            Изменить получателя
+                        {% else %}
+                            Добавить получателя
+                        {% endif %}
+                    </button>
                 </div>
             </form>
         </div>
