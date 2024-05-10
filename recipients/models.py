@@ -7,7 +7,7 @@ class Recipients(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='description')
 
     def __str__(self):
-        return f'{self.email} - {self.name}'
+        return self.email
 
     class Meta:
         verbose_name = 'Получатель'

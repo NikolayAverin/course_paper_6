@@ -10,7 +10,6 @@ class MailingMessage(models.Model):
     title = models.CharField(max_length=150, verbose_name='title')
     content = models.TextField(verbose_name='content')
 
-
     def __str__(self):
         return self.title
 
@@ -21,18 +20,14 @@ class MailingMessage(models.Model):
 
 class MailingSettings(models.Model):
     first_datetime = models.DateTimeField(verbose_name='first_datetime', auto_now_add=True)
-    # first_datetime = models.DateTimeField(verbose_name='first_datetime', auto_now_add=True)
-    # end_time = models.DateTimeField(verbose_name='end_time')
-    # sending_period = models.CharField(max_length=50, verbose_name='sending_period', choices=FREQUENCY_CHOICES)
-    # message = models.CharField(max_length=100, verbose_name='message', null=True, blank=True)
-    # message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message')
-    # recipients = models.ManyToManyField(Recipients, verbose_name='recipients')
-    # recipients = models.CharField(max_length=100, verbose_name='recipients', null=True, blank=True)
-    # settings_status = models.CharField(max_length=50, verbose_name='settings_status', choices=STATUS_OF_NEWSLETTER, default='Create')
-
+    end_time = models.DateTimeField(verbose_name='end_time', null=True, blank=True)
+    sending_period = models.CharField(max_length=50, verbose_name='sending_period', choices=FREQUENCY_CHOICES, null=True, blank=True)
+    message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='message', null=True, blank=True)
+    settings_status = models.CharField(max_length=50, verbose_name='settings_status', choices=STATUS_OF_NEWSLETTER, default='Create')
+    recipients = models.ManyToManyField(Recipients, verbose_name='recipients')
 
     def __str__(self):
-        return f'{self.message} отправляется каждый {self.sending_period} с {self.first_datetime}'
+        return f'{self.message} отправляется каждый {self.sending_period} с {self.first_datetime} для {self.recipients}'
 
     class Meta:
         verbose_name = 'Настройка отправки'

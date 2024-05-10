@@ -14,12 +14,13 @@
             <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-              <h2 class="my-0 fw-normal">Создана: {{ settings.first_datetime }}</h2>
+              <h2 class="my-0 fw-normal">Создана: {{ setting.first_datetime }}</h2>
             </div>
             <div class="card-body">
-              <p class="card-title pricing-card-title">Для: {{ settings.recipients }}</p>
-              <p class="card-title pricing-card-title">Периодичность: {{ settings.sending_period }}</p>
-              <p class="card-title pricing-card-title">Завершится: {{ settings.end_time }}</p>
+              <p class="card-title pricing-card-title">Для: {{ setting.recipients }}</p>
+              <p class="card-title pricing-card-title">Периодичность: {{ setting.sending_period }}</p>
+              <p class="card-title pricing-card-title">Завершится: {{ setting.end_time }}</p>
+              <p class="card-title pricing-card-title">Сообщение: {{ setting.message }}</p>
               <a class="btn btn-primary" href="{% url 'mailing:settings_view' setting.pk %}" role="button">Просмотреть</a>
             </div>
           </div>
