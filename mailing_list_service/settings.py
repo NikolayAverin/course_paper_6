@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mailing_list_service',
         'USER': 'postgres',
-        'PASSWORD': '111111',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
