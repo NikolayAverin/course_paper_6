@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
-from mailing.models import MailingMessage, MailingSettings
+from mailing.models import MailingMessage, MailingSettings, MailingStatus
 
 
 class MailingMessageCreateView(CreateView):
@@ -31,13 +31,13 @@ class MailingMessageDetailView(DetailView):
 
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
-    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    fields = ['first_datetime', 'end_time', 'sending_period', 'message', 'recipients']
     success_url = reverse_lazy('mailing:settings_list')
 
 
 class MailingSettingsUpdateView(UpdateView):
     model = MailingSettings
-    fields = ['sending_period', 'recipients', 'message', 'end_time']
+    fields = ['first_datetime', 'end_time', 'sending_period', 'message', 'recipients']
     success_url = reverse_lazy('mailing:settings_list')
 
 
@@ -52,3 +52,12 @@ class MailingSettingsDetailView(DetailView):
 class MailingSettingsDeleteView(DeleteView):
     model = MailingSettings
     success_url = reverse_lazy('mailing:settings_list')
+
+
+class MailingStatusListView(ListView):
+    model = MailingStatus
+
+
+class MailingStatusDeleteView(DeleteView):
+    model = MailingStatus
+    success_url = reverse_lazy('mailing:status_list')

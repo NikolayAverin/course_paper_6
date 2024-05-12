@@ -1,0 +1,30 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Статусы рассылок</h1>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for mailing in object_list %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h2 class="my-0 fw-normal">Рассылка: {{ mailing.mailing_id.message }}</h2>
+                        <h4 class="my-0 fw-normal">Статус рассылки: {{ mailing.mailing_id.settings_status }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title pricing-card-title">В статусе: {{ mailing.status }} </p>
+                        <p class="card-title pricing-card-title">Последняя отправка: {{ mailing.last_datetime }}</p>
+                        <p class="card-title pricing-card-title">С ответом: {{ mailing.mailing_response }}</p>
+                        {% if mailing.mailing_id.settings_status == 'Done' %}
+                        <p class="card-title pricing-card-title">Рассылка завершена</p>
+                        {% else %}
+                        <p class="card-title pricing-card-title">Дата следующей отправки: {{ mailing.mailing_id.next_datetime }}</p>
+                        {% endif %}
+                        <a class="btn btn-primary" href="{% url 'mailing:status_delete' mailing.pk %}" role="button">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
