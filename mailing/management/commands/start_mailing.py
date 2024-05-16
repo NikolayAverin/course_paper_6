@@ -31,6 +31,7 @@ class Command(BaseCommand):
     help = "Runs APScheduler."
 
     def handle(self, *args, **options):
+        """Команда запускает в APScheduler функию send_mailing каждые 59 секунд"""
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
 

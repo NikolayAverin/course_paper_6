@@ -7,6 +7,7 @@ STATUS_OF_NEWSLETTER = [("Create", 'Создана'), ("Started", 'Отправ�
 
 
 class MailingMessage(models.Model):
+    """Модель сообщения"""
     title = models.CharField(max_length=150, verbose_name='title')
     content = models.TextField(verbose_name='content')
 
@@ -19,6 +20,7 @@ class MailingMessage(models.Model):
 
 
 class MailingSettings(models.Model):
+    """Модель настроек отправки"""
     first_datetime = models.DateTimeField(verbose_name='first_datetime')
     next_datetime = models.DateTimeField(verbose_name='next_datetime', null=True, blank=True)
     end_time = models.DateTimeField(verbose_name='end_time')
@@ -36,6 +38,7 @@ class MailingSettings(models.Model):
 
 
 class MailingStatus(models.Model):
+    """Модель статуса отправки"""
     last_datetime = models.DateTimeField(auto_now_add=True, verbose_name='last_datetime')
     status = models.CharField(max_length=50, verbose_name='статус попытки')
     mailing_response = models.TextField(verbose_name='mailing_response')
