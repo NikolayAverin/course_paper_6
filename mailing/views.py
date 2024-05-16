@@ -1,18 +1,19 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
+from mailing.forms import MailingMessageForm, MailingSettingsForm
 from mailing.models import MailingMessage, MailingSettings, MailingStatus
 
 
 class MailingMessageCreateView(CreateView):
     model = MailingMessage
-    fields = ['title', 'content']
+    form_class = MailingMessageForm
     success_url = reverse_lazy('mailing:list')
 
 
 class MailingMessageUpdateView(UpdateView):
     model = MailingMessage
-    fields = ['title', 'content']
+    form_class = MailingMessageForm
     success_url = reverse_lazy('mailing:list')
 
 
@@ -31,13 +32,13 @@ class MailingMessageDetailView(DetailView):
 
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
-    fields = ['first_datetime', 'end_time', 'sending_period', 'message', 'recipients']
+    form_class = MailingSettingsForm
     success_url = reverse_lazy('mailing:settings_list')
 
 
 class MailingSettingsUpdateView(UpdateView):
     model = MailingSettings
-    fields = ['first_datetime', 'end_time', 'sending_period', 'message', 'recipients']
+    form_class = MailingSettingsForm
     success_url = reverse_lazy('mailing:settings_list')
 
 
