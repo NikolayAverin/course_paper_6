@@ -14,4 +14,4 @@ class StyleFormMixin:
 class RecipientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Recipients
-        fields = "__all__"
+        fields = '__all__'

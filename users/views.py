@@ -1,11 +1,13 @@
 import secrets
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserForm, UserModeratorForm
 from users.models import User
 from mailing_list_service.settings import EMAIL_HOST_USER
 
@@ -38,3 +40,18 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserForm
+    success_url = reverse_lazy('mailing:settings_list')
+
+    def get_form_class(self):
+        """Переопределяем форму для модератора"""
+        user = self.request.user
+        if user == self.object.user:
+            return UserForm
+        if user.has_perm('users.can_deactivate_user'):
+            return UserModeratorForm
+        raise PermissionDenied

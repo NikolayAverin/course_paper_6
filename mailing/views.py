@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
-from mailing.forms import MailingMessageForm, MailingSettingsForm
+from mailing.forms import MailingMessageForm, MailingSettingsForm, MailingSettingsModeratorForm
 from mailing.models import MailingMessage, MailingSettings, MailingStatus
 
 
@@ -13,10 +14,10 @@ class MailingMessageCreateView(CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
         """Сохранение создателя сообщения"""
-        message = form.save
+        mailing_message = form.save()
         user = self.request.user
-        message.creator = user
-        message.save()
+        mailing_message.creator = user
+        mailing_message.save()
         return super().form_valid(form)
 
 
@@ -44,11 +45,28 @@ class MailingSettingsCreateView(CreateView):
     form_class = MailingSettingsForm
     success_url = reverse_lazy('mailing:settings_list')
 
+    def form_valid(self, form):
+        """Сохранение создателя сообщения"""
+        mailing_settings = form.save()
+        user = self.request.user
+        mailing_settings.creator = user
+        mailing_settings.save()
+        return super().form_valid(form)
 
-class MailingSettingsUpdateView(UpdateView):
+
+class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy('mailing:settings_list')
+
+    def get_form_class(self):
+        """Переопределяем форму для модератора"""
+        user = self.request.user
+        if user == self.object.creator:
+            return MailingSettingsForm
+        if user.has_perm('mailing.can_change_settings_status'):
+            return MailingSettingsModeratorForm
+        raise PermissionDenied
 
 
 class MailingSettingsListView(ListView):

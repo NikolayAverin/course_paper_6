@@ -20,4 +20,10 @@ class MailingMessageForm(StyleFormMixin, forms.ModelForm):
 class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingSettings
-        exclude = ['next_datetime', 'settings_status']
+        exclude = ['next_datetime', 'settings_status', 'creator']
+
+
+class MailingSettingsModeratorForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = MailingSettings
+        fields = ('settings_status', )

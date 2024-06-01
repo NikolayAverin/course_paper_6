@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Recipients(models.Model):
     """Модель получателей рассылки"""

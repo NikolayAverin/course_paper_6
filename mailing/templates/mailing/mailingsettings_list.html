@@ -22,8 +22,11 @@
                         {% endfor %}
                         <p class="card-title pricing-card-title">Периодичность: {{ setting.sending_period }}</p>
                         <p class="card-title pricing-card-title">Завершится: {{ setting.end_time }}</p>
+                        <p class="card-title pricing-card-title">Статус: {{ setting.settings_status }}</p>
                         <p class="card-title pricing-card-title">Сообщение: {{ setting.message }}</p>
-                        <a class="btn btn-primary" href="{% url 'mailing:settings_view' setting.pk %}" role="button">Просмотреть</a>
+                        {% if perms.mailing.can_see_mailing_settings or user == setting.creator %}
+                            <a class="btn btn-primary" href="{% url 'mailing:settings_view' setting.pk %}" role="button">Просмотреть</a>
+                        {% endif %}
                   </div>
               </div>
             </div>

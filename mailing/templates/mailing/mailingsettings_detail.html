@@ -13,9 +13,13 @@
                         {% for recipient in object.recipients.all %}
                             <p class="card-title pricing-card-title">Для: {{ recipient }}</p>
                         {% endfor %}
-                        <a class="btn btn-primary" href="{% url 'mailing:settings_edit' object.pk %}" role="button">Изменить</a>
+                        {% if perms.mailing.can_change_settings_status or user == object.creator %}
+                            <a class="btn btn-primary" href="{% url 'mailing:settings_edit' object.pk %}" role="button">Изменить</a>
+                        {% endif %}
+                        {% if user == object.creator %}
+                            <a class="btn btn-primary" href="{% url 'mailing:settings_delete' object.pk %}" role="button">Удалить</a>
+                        {% endif %}
                         <a class="btn btn-primary" href="{% url 'mailing:settings_list' %}" role="button">Назад</a>
-                        <a class="btn btn-primary" href="{% url 'mailing:settings_delete' object.pk %}" role="button">Удалить</a>
                     </div>
                 </div>
             </div>

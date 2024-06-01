@@ -4,7 +4,7 @@ from recipients.models import Recipients
 from users.models import User
 
 FREQUENCY_CHOICES = [('daily', 'раз в день'), ('weekly', 'раз в неделю'), ('monthly', 'раз в месяц'), ]
-STATUS_OF_NEWSLETTER = [("Create", 'Создана'), ("Started", 'Отправляется'), ("Done", 'Завершена'), ]
+STATUS_OF_NEWSLETTER = [("Create", 'Создана'), ("Started", 'Отправляется'), ("Done", 'Завершена'), ("Cancel", 'Отменена'), ]
 
 
 class MailingMessage(models.Model):
@@ -38,6 +38,10 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = 'Настройка отправки'
         verbose_name_plural = 'Настройки отправки'
+        permissions = [
+            ('can_see_mailing_settings', 'can see all mailing settings'),
+            ('can_change_settings_status', 'can change settings status')
+        ]
 
 
 class MailingStatus(models.Model):
