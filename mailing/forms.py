@@ -14,7 +14,7 @@ class StyleFormMixin:
 class MailingMessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingMessage
-        fields = '__all__'
+        exclude = ['creator']
 
 
 class MailingSettingsForm(StyleFormMixin, forms.ModelForm):

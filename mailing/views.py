@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
@@ -5,10 +6,18 @@ from mailing.forms import MailingMessageForm, MailingSettingsForm
 from mailing.models import MailingMessage, MailingSettings, MailingStatus
 
 
-class MailingMessageCreateView(CreateView):
+class MailingMessageCreateView(CreateView, LoginRequiredMixin):
     model = MailingMessage
     form_class = MailingMessageForm
     success_url = reverse_lazy('mailing:list')
+
+    def form_valid(self, form):
+        """Сохранение создателя сообщения"""
+        message = form.save
+        user = self.request.user
+        message.creator = user
+        message.save()
+        return super().form_valid(form)
 
 
 class MailingMessageUpdateView(UpdateView):

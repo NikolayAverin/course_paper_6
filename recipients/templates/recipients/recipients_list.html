@@ -2,9 +2,11 @@
 {% block content %}
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-4 fw-normal text-body-emphasis">Все получатели</h1>
-        <h3>
-          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'recipients:create' %}">Добавить получателя</a>
-        </h3>
+        {% if user.is_authenticated %}
+            <h3>
+              <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'recipients:create' %}">Добавить получателя</a>
+            </h3>
+        {% endif %}
     </div>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         {% for recipients in object_list %}
