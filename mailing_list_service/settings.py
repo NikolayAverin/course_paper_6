@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'mailing',
     'recipients',
     'users',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mailing_list_service',
         'USER': 'postgres',
-        'PASSWORD': '111111',
+        'PASSWORD': '......',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -142,7 +143,7 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'RizZzon11688@yandex.ru'
-EMAIL_HOST_PASSWORD = 'thymepbdhonwmemt'
+EMAIL_HOST_PASSWORD = '......'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
