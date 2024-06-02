@@ -1,0 +1,31 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Все пользователи</h1>
+    </div>
+    {% if perms.users.can_see_users_list %}
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            {% for user in object_list %}
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h2 class="my-0 fw-normal">{{ user.email }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title pricing-card-title">Телефон: {{ user.phone_number }}</p>
+                            <p class="card-title pricing-card-title">Активность: {{ user.is_active }}</p>
+                            {% if perms.users.can_deactivate_user and user.is_superuser == False %}
+                                {% if user.is_active %}
+                                    <a class="btn btn-primary" href="{% url 'users:activity' user.pk %}" role="button">Заблокировать</a>
+                                {% else %}
+                                    <a class="btn btn-primary" href="{% url 'users:activity' user.pk %}" role="button">Разблокировать</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

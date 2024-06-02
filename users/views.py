@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 
 from users.forms import UserRegisterForm, UserForm, UserModeratorForm
 from users.models import User
@@ -36,6 +36,7 @@ class UserCreateView(CreateView):
 
 
 def email_verification(request, token):
+    """Подтверждение почты"""
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
@@ -48,10 +49,28 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('mailing:settings_list')
 
     def get_form_class(self):
-        """Переопределяем форму для модератора"""
         user = self.request.user
-        if user == self.object.user:
-            return UserForm
         if user.has_perm('users.can_deactivate_user'):
             return UserModeratorForm
+        if user == self.request.user:
+            return UserForm
         raise PermissionDenied
+
+    def get_object(self, queryset=None):
+        """Получаем текущего пользователя"""
+        return self.request.user
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+
+
+def change_activity(request, pk):
+    """Изменение активности пользователя"""
+    user = User.objects.get(pk=pk)
+    if user.is_active:
+        user.is_active = False
+    else:
+        user.is_active = True
+    user.save()
+    return redirect('users:users_list')

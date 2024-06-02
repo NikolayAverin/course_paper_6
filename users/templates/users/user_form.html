@@ -9,7 +9,11 @@
                         <div class="card-body">
                             {{ form.as_p }}
                         </div>
+                        {% if object %}
+                        <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
+                        {% else %}
                         <button type="submit" class="btn btn-primary mt-3">Зарегистрироваться</button>
+                        {% endif %}
                     </div>
                 </form>
             </div>
