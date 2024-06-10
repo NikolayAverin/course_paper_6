@@ -10,9 +10,11 @@
                     <div class="card-body">
                         <h5>{{ object.description }}</h5>
                         <p>Почта: {{ object.email }}</p>
+                        {% if user.is_superuser %}
                         <a class="btn btn-primary" href="{% url 'recipients:edit' object.pk %}" role="button">Изменить</a>
-                        <a class="btn btn-primary" href="{% url 'recipients:list' %}" role="button">Назад</a>
                         <a class="btn btn-primary" href="{% url 'recipients:delete' object.pk %}" role="button">Удалить</a>
+                        {% endif %}
+                        <a class="btn btn-primary" href="{% url 'recipients:list' %}" role="button">Назад</a>
                     </div>
                 </div>
             </div>

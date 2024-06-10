@@ -1,6 +1,5 @@
 from django.urls import path
 
-
 from recipients.apps import RecipientsConfig
 from recipients.views import RecipientListView, RecipientCreateView, RecipientDetailView, RecipientDeleteView, \
     RecipientUpdateView
