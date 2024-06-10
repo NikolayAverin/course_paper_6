@@ -5,6 +5,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 
 from blog.forms import BlogPostForm, BlogPostModeratorForm
 from blog.models import BlogPost
+from blog.services import get_blog_posts_from_cash
 
 
 class BlogPostCreateView(CreateView):
@@ -25,8 +26,8 @@ class BlogPostListView(ListView):
     model = BlogPost
 
     def get_queryset(self):
-        """Вывод только активных записей"""
-        return super().get_queryset().filter(is_published=True)
+        """Вывод только активных записей, из кеша"""
+        return get_blog_posts_from_cash()
 
 
 class BlogPostDetailView(DetailView):

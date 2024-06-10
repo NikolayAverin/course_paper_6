@@ -7,7 +7,7 @@ from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 
-from mailing.send_mailing import send_mailing
+from mailing.services import send_mailing
 
 
 # The `close_old_connections` decorator ensures that database connections, that have become

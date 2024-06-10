@@ -1,0 +1,47 @@
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Сервис email рассылок</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="my-0 font-weight-normal">О нас</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Всего зарегистрировано рассылок: {{ mailing_settings_count }}</li>
+                            <li>Из них активно на данный момент: {{ mailing_settings_active_count }}</li>
+                            <li>Общее количество доступных получаетелей: {{ recipients_count }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for post in blog_posts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="my-0 font-weight-bold">{{ post.title }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if post.image %}
+                                <img src="{{ post.image | media_filter }}" class="rounded mx-auto d-block w-100">
+                            {% endif %}
+                            <p class="card-text mt-3">{{ post.content | slice:":100" }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <p class="card-text">Просмотров: {{ post.views_count }}</p>
+                            <a class="btn btn-primary" href="{% url 'blog:view' post.pk %}" role="button">Просмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,8 +1,11 @@
+import random
 import smtplib
 import pytz
 
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
+
+from blog.models import BlogPost
 from mailing.models import MailingSettings, MailingStatus
 from mailing_list_service import settings
 from dateutil.relativedelta import relativedelta
@@ -62,3 +65,10 @@ def send_mailing():
 
         except smtplib.SMTPException as error:
             MailingStatus.objects.create(status='fail', mailing_response=error, mailing_id=mailing)
+
+
+def get_three_random_blog(request):
+    """Функция получения 3 случайных постов из блога"""
+    blog_posts = BlogPost.objects.all()
+    random_blog_posts = random.sample(list(blog_posts), 3)
+    return random_blog_posts

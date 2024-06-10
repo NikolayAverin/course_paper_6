@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 
 from mailing.forms import MailingMessageForm, MailingSettingsForm, MailingSettingsModeratorForm
 from mailing.models import MailingMessage, MailingSettings, MailingStatus
+from mailing.services import get_three_random_blog
 
 
 class MailingMessageCreateView(CreateView, LoginRequiredMixin):
@@ -89,3 +90,24 @@ class MailingStatusListView(ListView):
 class MailingStatusDeleteView(DeleteView):
     model = MailingStatus
     success_url = reverse_lazy('mailing:status_list')
+
+
+class HomePageView(ListView):
+    model = MailingSettings
+
+    def get_context_data(self, **kwargs):
+        """Получаем необходимые данные для домашней страницы"""
+        context = super().get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        mailing_settings = queryset.filter()
+
+        mailing_settings_count = mailing_settings.count()
+        mailing_settings_active_count = mailing_settings.filter(settings_status='Started').count()
+        recipients_count = mailing_settings.values('recipients').distinct().count()
+
+        context['mailing_settings_count'] = mailing_settings_count
+        context['mailing_settings_active_count'] = mailing_settings_active_count
+        context['recipients_count'] = recipients_count
+        context['blog_posts'] = get_three_random_blog(self.request)
+
+        return context
